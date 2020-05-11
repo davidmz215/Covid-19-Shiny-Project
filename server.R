@@ -9,11 +9,12 @@ function(input, output){
     xlab('Density')  
   })
   output$demographics <- renderPlotly({
+    #fit <- reactive({lm(data[x] ~ data[y])})
     data %>%
       ggplot(.,aes(label = Zip)) +
     geom_point(aes_string(x=input$x, y=input$y)) +
-    ggtitle('Demographics and Covid-19') 
-    #+ abline(lm(input$y ~ x==input$x, data = 'data'))
+    ggtitle('Demographics and Covid-19') #+
+    #abline(fit())  
   })
       
     pal <- colorNumeric(
@@ -119,5 +120,17 @@ function(input, output){
                                       in Crowded Housing <br> 
                                       by Zip Code"),
                 position = "bottomright")
+  })
+  output$cor1 <- renderText({
+    z = cor(data$Percent.Population, data$Median.Household.Income)
+    paste0(c('Correlation Coefficient for Household Income:', z))
+  })
+  output$cor2 <- renderText({
+    z = cor(data$Percent.Population, data$Percent_College)
+    paste0(c('Correlation Coefficient for Education:', z))
+  })
+  output$cor3 <- renderText({
+    z = cor(data$Percent.Population, data$Percent_Crowded)
+    paste0(c('Correlation Coefficient for Crowded Housing', z))
   })
 }

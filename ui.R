@@ -47,7 +47,7 @@ shinyUI(dashboardPage(skin = "blue",
                             h3('-Income'),
                             h3('-Education'),
                             h3('-Public Transit'),
-                            h3('-housing'))
+                            h3('-Housing'))
                         ),
                         tabItem(tabName = 'graphs', 
                               h2('Comparison of Covid-19 Data Based on Zipcode Demographics'),
@@ -59,7 +59,7 @@ shinyUI(dashboardPage(skin = "blue",
                                                       choices = c('Median Household Income'='Median.Household.Income', 'Percent Bachelors Degree or Higher' = 'Percent_College', 'Percent Taking Public Transit' = 'Percent_Public_Transit', 'Crowded Housing(Percent of population living in crowded housing)' = 'Percent_Crowded')),
                                        selectizeInput(inputId = 'y',
                                                       label = 'Select Covid-19 Statistic',
-                                                      choices = c('Percent Tested Population Positve for Covid-19'='Percent.Population','Total Positive' ='Positive','Total Tests' = 'Total_Tests'))
+                                                      choices = c('Percent Tested Population Positive for Covid-19'='Percent.Population','Total Positive' ='Positive','Total Tests' = 'Total_Tests'))
                                       
                                     )
                                     )),
@@ -69,7 +69,15 @@ shinyUI(dashboardPage(skin = "blue",
                               box(leafletOutput('map'), width = 12),
                               box(leafletOutput('map2'), width = 12),
                               box(leafletOutput('map3'), width = 12)
-                              ))
+                              )),
+                        tabItem(tabName = 'info',
+                          fluidRow(
+                            box(h3('Which factors have the strongest correlation?'),
+                                h4(textOutput('cor1')),
+                                h4(textOutput('cor2')),
+                                h4(textOutput('cor3')))
+                          )
+                        )
                         
                               )
                      )
