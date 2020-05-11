@@ -1,7 +1,7 @@
 library(shinydashboard)
 shinyUI(dashboardPage(skin = "blue",
                       dashboardHeader(
-                        title = "Covid-19 NYC Demographic Analysis",
+                        title = "Covid-19 NYC Demographics",
                         titleWidth = 230
                       ), 
                       
@@ -19,10 +19,10 @@ shinyUI(dashboardPage(skin = "blue",
                                    tabName = "map", icon = icon("map")),
               
                           menuItem("Conclusion and Credits" , 
-                                   tabName = "info", icon = icon("book")),
+                                   tabName = "info", icon = icon("address-card"))
                           
-                          menuItem("About Me", 
-                                   tabName = "Me", icon = icon("address-card"))
+                          #menuItem("About Me", 
+                                   #tabName = "Me", icon = icon("address-card"))
                         )
                       ), 
                       dashboardBody(
@@ -43,11 +43,11 @@ shinyUI(dashboardPage(skin = "blue",
                             h3('Common Belief: New York has so many Covid-19 cases because it is a very dense city.'),
                             h4('However, when we try to relate the severity to density we do not find any correlation.'),
                             box(plotlyOutput('density'), width = 8),
-                            box(h3('So what does influence Covid-19 infection rates?'),
+                            h3('So what does influence Covid-19 infection rates?'),
                             h3('-Income'),
                             h3('-Education'),
                             h3('-Public Transit'),
-                            h3('-Housing'))
+                            h3('-Housing')
                         ),
                         tabItem(tabName = 'graphs', 
                               h2('Comparison of Covid-19 Data Based on Zipcode Demographics'),
@@ -75,7 +75,16 @@ shinyUI(dashboardPage(skin = "blue",
                             box(h3('Which factors have the strongest correlation?'),
                                 h4(textOutput('cor1')),
                                 h4(textOutput('cor2')),
-                                h4(textOutput('cor3')))
+                                h4(textOutput('cor3'))),
+                            box(h3('Density and a use of public transportation are not the primary cause of the severity of the outbreak.'),
+                                h3('Income inequality and lack of access to education and adequate housing are!')
+                                )),
+                          fluidRow(
+                            h2('Possible Further Investigations:'),
+                            h3('Access to healthcare'),
+                            h3('Death rates'),
+                            h3('Infection rates in public housing and nursing homes'),
+                            h3('Proportion of essential workers')
                           )
                         )
                         

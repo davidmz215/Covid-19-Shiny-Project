@@ -6,7 +6,7 @@ function(input, output){
     geom_point(aes(density, Percent.Population)) +
     ggtitle('Density and Covid-19') +
     ylab('Percent Tested Population Positive') +
-    xlab('Density')  
+    xlab('Density(ppsm)')  
   })
   output$demographics <- renderPlotly({
     #fit <- reactive({lm(data[x] ~ data[y])})
