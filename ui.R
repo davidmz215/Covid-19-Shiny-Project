@@ -17,6 +17,9 @@ shinyUI(dashboardPage(skin = "blue",
                           
                           menuItem("Map Visualization",
                                    tabName = "map", icon = icon("map")),
+                          
+                          menuItem("Borough Data", 
+                          tabName = "Boro", icon = icon("apple-alt")),
               
                           menuItem("Conclusion and Credits" , 
                                    tabName = "info", icon = icon("address-card"))
@@ -86,8 +89,12 @@ shinyUI(dashboardPage(skin = "blue",
                             h3('Infection rates in public housing and nursing homes'),
                             h3('Proportion of essential workers')
                           )
+                        ),
+                        tabItem(tabName = 'Boro',
+                                h2("Covid-19 Data by Borough"),
+                                fluidRow(box(DT::dataTableOutput("boro"),
+                                             width = 12))
                         )
-                        
                               )
                      )
         ))

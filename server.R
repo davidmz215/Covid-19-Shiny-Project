@@ -11,9 +11,11 @@ function(input, output){
   output$demographics <- renderPlotly({
     #fit <- reactive({lm(data[x] ~ data[y])})
     data %>%
-      ggplot(.,aes(label = Zip)) +
+      ggplot(., aes(label = Zip)) +
     geom_point(aes_string(x=input$x, y=input$y)) +
-    ggtitle('Demographics and Covid-19') #+
+    ggtitle('Demographics and Covid-19') +
+      xlab(switch(input$x, 'Median.Household.Income' = 'Median Household Income', 'Percent_College' = 'Percent Bachelors Degree or Higher', 'Percent_Public_Transit' = 'Percent Taking Public Transit', 'Percent_Crowded' = 'Crowded Housing(Percent of population living in crowded housing)')) +
+      ylab(switch(input$y, 'Percent.Population' = 'Percent Tested Population Positive for Covid-19', 'Positive'='Total Positive', 'Total_Tests' = 'Total Tests'))
     #abline(fit())  
   })
       
@@ -26,7 +28,9 @@ function(input, output){
         "Zip Code: ",
         char_zips@data$GEOID10, "<br/>",
         "Percent Positive: ",
-        char_zips@data$Percent.Population) %>%
+        char_zips@data$Percent.Population, '<br/>', 
+    'Borough:',
+    char_zips@data$borough)  %>%
       lapply(htmltools::HTML)
   output$map <- renderLeaflet({
     char_zips %>% 
@@ -61,7 +65,9 @@ function(input, output){
       "Zip Code: ",
       char_zips@data$GEOID10, "<br/>",
       "Median Household Income: ",
-      char_zips@data$Median.Household.Income) %>%
+      char_zips@data$Median.Household.Income, '<br/>', 
+      'Borough:',
+        char_zips@data$borough)  %>%
     lapply(htmltools::HTML)
   output$map2 <- renderLeaflet({
     char_zips %>% 
@@ -95,7 +101,9 @@ function(input, output){
       "Zip Code: ",
       char_zips@data$GEOID10, "<br/>",
       "Percent Living in Crowded Housing: ",
-      char_zips@data$Percent_Crowded) %>%
+      char_zips@data$Percent_Crowded, '<br/>', 
+      'Borough:',
+      char_zips@data$borough)  %>%
     lapply(htmltools::HTML)
   output$map3 <- renderLeaflet({
     char_zips %>% 
@@ -133,4 +141,8 @@ function(input, output){
     z = cor(data$Percent.Population, data$Percent_Crowded)
     paste0(c('Correlation Coefficient for Crowded Housing', z))
   })
+  output$boro <- DT::renderDataTable({
+    boroughdata %>%
+    rename(., c('Covid Case Count' = 'COVID_CASE_COUNT', 'Covid Case Rate(per 100,000)' = 'COVID_CASE_RATE'))
+  })  
 }

@@ -15,5 +15,6 @@ char_zips <- zctas(cb = TRUE, starts_with = c('100', '101', '102', '103', '104',
 colnames(char_zips@data)[1]= 'Zipcode' 
 char_zips <- geo_join(char_zips, data, 'GEOID10', 'zipcode', by = 'Zipcode', how = 'inner')
 leaflet <- leaflet() %>% setView(lng = -74.0060, lat = 42.3601, zoom = 10)
+boroughdata <-read.csv(file = './boro.csv')
 #values <- reactiveValues()
 #PctMedInc <- data %>% select(., 'Zipcode', 'Percent Population', 'density')

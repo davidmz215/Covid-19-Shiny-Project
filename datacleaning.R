@@ -4,6 +4,7 @@ tests <- read.csv('tests.csv')
 census <- read.csv('Census.csv')
 popdens <- read.csv('uszips.csv')
 housing <- read.csv('Housing.csv')
+zips <- read.csv('zip_borough.csv')
 tests <- tests %>%
   rename(., c('Zipcode' = 'MODZCTA', 'Percent.Population' = 'zcta_cum.perc_pos'))
 
@@ -27,5 +28,5 @@ popdens <- popdens %>%
   #filter(., city == 'New York' | city == 'Staten Island' | city == 'Bronx') %>%
   rename(., 'Zipcode' = 'zip')
 
-workingdata = inner_join(inner_join(inner_join(tests, censusdata, 'Zipcode'), popdens, 'Zipcode'), housing, 'Zipcode')
+workingdata = inner_join(inner_join(inner_join(inner_join(tests, censusdata, 'Zipcode'), popdens, 'Zipcode'), housing, 'Zipcode'), zips, 'Zipcode')
 write_csv(workingdata, './cleaned_data.csv')
